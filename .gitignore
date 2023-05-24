@@ -30,3 +30,32 @@
 *.exe
 *.out
 *.app
+
+# IDE
+.vscode/
+
+# Multimedia and binaries
+main
+*.png
+*.jpg
+*.gif
+*.bmp
+*.mp4
+*.mp3
+*.m4a
+*.ogg
+*.3gp
+*.midi
+*.wav
+*.ext
+*.webv
+*.tiff
+*.ico
+*.avi
+*.2gp
+*.pdf
+*.zip
+*.tar
+*.rar
+*.gz
+*.xz
