@@ -13,7 +13,7 @@
 
 #define error(s) return(cout<<s<<endl)?EXIT_FAILURE:1
 
-const static double undefined = *(double*) 0xFFFFFFFF;
+const static double undefined = 5200.4;
 
 enum TypeExp { CONSTANT , VARIABLE , FUNCTION , OPERATOR , N_FUNCTION };
 typedef enum TypeExp TypeExp;
