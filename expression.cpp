@@ -2,10 +2,11 @@
 
 using namespace std;
 
-Expression::Expression(operateur op, vector<Expression> operandes) : _last(0.0), _op(op), var_name("") { copy(operandes.begin(), operandes.end(), _operandes); }
-Expression::Expression() : Expression(constant, vector<Expression>()) {}
+Expression::Expression(double (*op)(std::vector<Expression>, std::map<std::string,double>), vector<Expression> operandes) : 
+            _last(0.0), _op(op), var_name("") { copy(operandes.begin(), operandes.end(), back_inserter(_operandes)); }
+Expression::Expression() : Expression(constant, vector<Expression>()) { _type = CONSTANT; }
 Expression::Expression(double a) : Expression() { _last = a; }
-Expression::Expression(string s) : Expression() { var_name = s; }
+Expression::Expression(string s) : Expression() { var_name = s; _type = VARIABLE; }
 
 Expression::~Expression() {}
 
@@ -24,7 +25,9 @@ double Expression::eval(map<string,double> vars)
     return _last;
 }
 
-operateur Expression::getop() const { return _op; }
+TypeExp Expression::getop() const { return _type; }
+
+string Expression::getVarName() const { return var_name; }
 
 double constant(vector<Expression> exps, map<string,double> vars) { return 0.0; }
 
@@ -90,8 +93,9 @@ double derivate(vector<Expression> exps, map<string,double> vars)
 {
     if (exps.size() != 3)
         throw invalid_argument("error size exps in derivate operator");
-    if (exps[2].getop() != variable)
+    if (exps[2].getop() != VARIABLE)
         throw invalid_argument("error type argument");
+    return 0.0;
 }
 
 double integrate(vector<Expression> exps, map<string,double> vars)

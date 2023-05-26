@@ -7,19 +7,21 @@
 #include <map>
 #include <cmath>
 
+// #include <gsl/gsl_math.h>
+
 #define MARGE   0.05
 
 #define error(s) return(cout<<s<<endl)?EXIT_FAILURE:1
 
 const static double undefined = *(double*) 0xFFFFFFFF;
 
-class Expression;
-typedef double (*operateur)(std::vector<Expression>, std::map<std::string,double>);
+enum TypeExp { CONSTANT , VARIABLE , FUNCTION , OPERATOR , N_FUNCTION };
+typedef enum TypeExp TypeExp;
 
 class Expression
 {
     public:
-        Expression(operateur, std::vector<Expression>);
+        Expression(double (*op)(std::vector<Expression>, std::map<std::string,double>), std::vector<Expression>);
         Expression(double);
         Expression(std::string);
         Expression();
@@ -27,14 +29,18 @@ class Expression
 
         virtual double eval(std::map<std::string,double> vars = std::map<std::string,double>());
 
-        virtual operateur getop() const;
+        virtual TypeExp getop() const;
+        virtual std::string getVarName() const;
 
     protected:
         std::vector<Expression> _operandes;
-        operateur _op;
+        double (*_op)(std::vector<Expression>, std::map<std::string,double>);
+        TypeExp _type;
         double _last;
         std::string var_name;
 };
+
+typedef double (*operateur)(std::vector<Expression>, std::map<std::string,double>);
 
 double constant         (std::vector<Expression> exps, std::map<std::string,double> vars = std::map<std::string,double>());
 double identity         (std::vector<Expression> exps, std::map<std::string,double> vars = std::map<std::string,double>());

@@ -5,7 +5,7 @@ NAME=main
 CC=g++
 LIBS=-lm
 CFLAGS=-g
-OFLAGS=-O2 -I .
+OFLAGS=-O2 -I/usr/local/include -L/usr/local/libs
 $(NAME): $(OBJ)
 	$(CC) $(OFLAGS) -o $@ $^ $(LIBS)
 	./$(NAME)
