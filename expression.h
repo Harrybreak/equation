@@ -13,7 +13,9 @@
 
 #define error(s) return(cout<<s<<endl)?EXIT_FAILURE:1
 
-const static double undefined = 5200.4;
+//                                              SEXPONENT---MANTISSA--------------------------------------------
+const static unsigned long long undefined_l = 0b1111111111111000000000000000000000000000000000000000000000000001;
+const static double undefined = *(double*)(&undefined_l);
 
 enum TypeExp { CONSTANT , VARIABLE , FUNCTION , OPERATOR , N_FUNCTION };
 typedef enum TypeExp TypeExp;
